@@ -8,7 +8,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 app = FastAPI()
 
 MONGODB_URI = os.getenv("MONGODB_URI")
-DB_NAME = os.getenv("MONGODB_DB_NAME", "recipesdb")
+DB_NAME = "recipesdb"
 client = AsyncIOMotorClient(MONGODB_URI)
 db = client[DB_NAME]
 
