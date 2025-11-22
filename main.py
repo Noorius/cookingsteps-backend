@@ -1,11 +1,20 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Optional
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # или укажите название фронтенд сайта
+    allow_credentials=True,
+    allow_methods=["*"],  # разрешить все методы, включая OPTIONS
+    allow_headers=["*"],
+)
 
 MONGODB_URI = os.getenv("MONGODB_URI")
 DB_NAME = "recipesdb"
