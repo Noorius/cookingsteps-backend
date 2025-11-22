@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
+from datetime import datetime
 
 app = FastAPI()
 
@@ -55,6 +56,7 @@ class LogEntry(BaseModel):
     recipe_id: str
     action: str
     step_index: Optional[int] = None
+    entry_datetime: datetime = Field(default_factory=datetime.utcnow)
 
 @app.get("/recipes", response_model=List[RecipeOut])
 async def get_recipes():
