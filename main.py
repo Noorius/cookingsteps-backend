@@ -83,7 +83,7 @@ async def log_action(entry: LogEntry):
 @app.post("/rating")
 async def log_rating(entry: Rating):
     data = entry.dict()
-    await db.logs.insert_one(data)
+    await db.rating.insert_one(data)
     return {"status": "ok"}
 
 @app.get("/", response_class=HTMLResponse)
