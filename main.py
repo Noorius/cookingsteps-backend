@@ -58,6 +58,13 @@ class LogEntry(BaseModel):
     step_index: Optional[int] = None
     entry_datetime: datetime = Field(default_factory=datetime.utcnow)
 
+class Rating(BaseModel):
+    user_id: Optional[str] = None
+    recipe_id: str
+    feedback: str
+    rating: Optional[int] = None
+    entry_datetime: datetime = Field(default_factory=datetime.utcnow)
+
 @app.get("/recipes", response_model=List[RecipeOut])
 async def get_recipes():
     cursor = db.recipes.find({})
@@ -69,6 +76,12 @@ async def get_recipes():
 
 @app.post("/log")
 async def log_action(entry: LogEntry):
+    data = entry.dict()
+    await db.logs.insert_one(data)
+    return {"status": "ok"}
+
+@app.post("/rating")
+async def log_rating(entry: Rating):
     data = entry.dict()
     await db.logs.insert_one(data)
     return {"status": "ok"}
